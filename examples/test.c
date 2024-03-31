@@ -1,20 +1,23 @@
 #include "../perf_count.h"
 
-#include <stdio.h> /* for printf, perror */
 #include <inttypes.h> /* for PRIu64 */
+#include <stdio.h>    /* for printf, perror */
 
-
-void lots_of_work() {
+void
+lots_of_work()
+{
     sleep(1);
 }
 
-int main() {
+int
+main()
+{
     struct perf_counter cycles;
-    if (perf_counter_setup(&cycles, PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES) == -1) {
+    if (perf_counter_setup(
+          &cycles, PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES) == -1) {
         perror("failed to setup perf counter");
         return -1;
     }
-
 
     perf_counter_start(&cycles);
     lots_of_work();
